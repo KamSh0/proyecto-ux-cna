@@ -53,6 +53,7 @@ export async function requestLogin(req, res) {
 
     console.log("Creating user session...")
     req.session.loggedId = activeUser.loginId;
+    req.session.role = activeUser.role;
 
     console.log("Logged in successfully.");
     return res.json({

@@ -1,50 +1,58 @@
 // Backend Grades controller [EP-03]
-import fs from 'fs';
+import fs from 'fs/promises';
 import { activeClass } from '../state/appState.js';
 
 export async function findClassesByStudentId(req, res) {
-    console.log("\n")
-    console.log("Class data request (by studentId).");
-    const {
-        studentId,
-    } = req.body
+    console.log("\nClass data request (by studentId).");
+    const { studentId } = req.body;
 
-    console.log("Reading class & student data...");
-    const classList = JSON.parse(
-        fs.readFileSync('./server/data/classData.json')
-    );
-
-    const studentClasses = classList.filter(class_ => class_.studentId === studentId).classId;
-
-    if (!studentClasses) {
-        console.log("Error: Classes not found.")
-        return res.status(401).json({
-            error: "Las clases no han sido encontradas."
-        })
+    if (!studentId) {
+        return res.status(400).json({ error: "El studentId es requerido." });
     }
 
-    console.log("Classes found.");
+    try {
+        // 1. Leer ambos archivos JSON de forma asíncrona y en paralelo
+        const [classListRaw, classInfoRaw] = await Promise.all([
+            fs.readFile('./server/data/classData.json', 'utf-8'),
+            fs.readFile('./server/data/classInfoData.json', 'utf-8')
+        ]);
 
-    res.json({
-        message: studentClasses // this is an array
-    });
-}
+        const classList = JSON.parse(classListRaw);
+        const classInfoList = JSON.parse(classInfoRaw);
 
-async function findClassNames(classIdArray) {
-    console.log("\n")
-    console.log("Class name data request (by classId).");
-    console.log("Reading class info...");
-    const classInfoList = JSON.parse(
-        fs.readFileSync('./server/data/classInfoData.json')
-    );
+        // 2. Filtrar los IDs de las clases pertenecientes al estudiante
+        const studentClassIds = classList
+            .filter(item => item.studentId === studentId)
+            .map(item => item.classId);
 
-    let classWithNames = [[]];
+        if (studentClassIds.length === 0) {
+            console.log("No classes found for this student.");
+            return res.status(404).json({
+                message: "No se encontraron clases para el estudiante ingresado.",
+                classes: []
+            });
+        }
 
-    for (let i in classIdArray) {
-        classWithNames[i].push(classInfoList.filter(class_ => class_.classId === classIdArray[i]).classId);
-        classWithNames[i].push(classInfoList.filter(class_ => class_.classId === classIdArray[i]).className);
+        // 3. Crear un Set para búsquedas de ID en tiempo constante O(1)
+        const targetIds = new Set(studentClassIds);
+
+        // 4. Cruzar la información con classInfoData de manera eficiente
+        const classesWithNames = classInfoList
+            .filter(info => targetIds.has(info.classId))
+            .map(info => ({
+                classId: info.classId,
+                className: info.className
+            }));
+
+        console.log("Classes found successfully.");
+        return res.json({
+            classes: classesWithNames
+        });
+
+    } catch (error) {
+        console.error("Error reading class files:", error);
+        return res.status(500).json({ error: "Error interno del servidor al procesar las clases." });
     }
-
 }
 
 export async function findStudentsByClassId(req, res) { 

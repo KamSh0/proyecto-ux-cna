@@ -4,7 +4,7 @@ import fs from 'fs';
 
 export async function sendProfessorData(req, res) { // [HU-03]
     console.log("\n");
-    console.log("Register professor data.");
+    console.log("Register / Update professor data.");
     const {
         loginId,
         firstName,
@@ -15,71 +15,57 @@ export async function sendProfessorData(req, res) { // [HU-03]
         phoneNumber,
         mobileNumber,
         email,
-    } = req.body
+    } = req.body;
 
     console.log("Reading professor data...");
     const profList = JSON.parse(
         fs.readFileSync('./server/data/professorData.json')
     );
 
-    const isLoginIdDuplicated = profList.find(user => user.loginId === loginId);
+    const existingIndex = profList.findIndex(user => user.loginId === loginId);
 
-    if (isLoginIdDuplicated) {
-        console.log("loginId already exists, cannot write professor data.")
-        return res.status(400).json({
-            error: "El ID de inicio de sesión ya existe. Por favor, ingrese un nuevo ID."
-        })
+    const professorData = {
+        loginId,
+        firstName,
+        lastName,
+        birthDate,
+        gender,
+        address,
+        phoneNumber,
+        mobileNumber,
+        email
+    };
+
+    if (existingIndex !== -1) {
+        console.log(`Updating existing professor with loginId: ${loginId}`);
+        profList[existingIndex] = professorData;
+    } else {
+        console.log(`Adding new professor with loginId: ${loginId}`);
+        profList.push(professorData);
     }
-
-    console.log("loginId is new.");
-    const newProfessor = {
-        loginId: loginId,
-        firstName: firstName,
-        lastName: lastName,
-        birthDate: birthDate,
-        gender: gender,
-        address: address,
-        phoneNumber: phoneNumber,
-        mobileNumber: mobileNumber,
-        email: email
-    }
-
-    profList.push(newProfessor);
 
     console.log("Saving professor data JSON...");
     fs.writeFileSync('./server/data/professorData.json', JSON.stringify(profList, null, 4));
 
     console.log("Professor data saved successfully");
     res.json({
-        message: "Datos personales del profesor guardados."
+        message: existingIndex !== -1 
+            ? "Datos personales del profesor actualizados correctamente." 
+            : "Datos personales del profesor guardados correctamente."
     });
 }
 
 export async function sendProfessorDegreeData(req, res) { // [HU-04]
     console.log("\n");
-    console.log("Register professor academic degree data.");
+    console.log("Register / Update professor academic degree data.");
 
     const {
         loginId,
-        continuingEducation, // [{ type: 'curso' | 'seminario' | 'diplomado', name, completionDate }]
-        postgraduateDegrees  // [{ type: 'especializacion' | 'maestria' | 'doctorado', name, completionDate, thesisTitle, thesisAdvisor }]
+        continuingEducation,
+        postgraduateDegrees
     } = req.body;
 
-    console.log("Reading professor degree data...");
-    const degreeList = JSON.parse(
-        fs.readFileSync('./server/data/professorDegreeData.json')
-    );
-
-    const isLoginIdDuplicated = degreeList.find(record => record.loginId === loginId);
-
-    if (isLoginIdDuplicated) {
-        console.log("loginId already has degree data registered.");
-        return res.status(400).json({
-            error: "Este docente ya tiene información académica registrada. Considere actualizarla en su lugar."
-        });
-    }
-
-    // validación los posgrados deben traer título y director de tesis
+    // Validación de posgrados incompletos (se mantiene)
     const tienePostgradoIncompleto = (postgraduateDegrees || []).some(
         posgrado => !posgrado.thesisTitle || !posgrado.thesisAdvisor
     );
@@ -91,31 +77,45 @@ export async function sendProfessorDegreeData(req, res) { // [HU-04]
         });
     }
 
-    console.log("loginId is new for degree data.");
-    const newDegreeRecord = {
+    console.log("Reading professor degree data...");
+    const degreeList = JSON.parse(
+        fs.readFileSync('./server/data/professorDegreeData.json')
+    );
+
+    const existingIndex = degreeList.findIndex(record => record.loginId === loginId);
+
+    const updatedDegreeRecord = {
         loginId,
         continuingEducation: continuingEducation || [],
         postgraduateDegrees: postgraduateDegrees || []
     };
 
-    degreeList.push(newDegreeRecord);
+    if (existingIndex !== -1) {
+        console.log(`Updating degree data for loginId: ${loginId}`);
+        degreeList[existingIndex] = updatedDegreeRecord;
+    } else {
+        console.log(`Adding new degree data for loginId: ${loginId}`);
+        degreeList.push(updatedDegreeRecord);
+    }
 
     console.log("Saving professor degree data JSON...");
     fs.writeFileSync('./server/data/professorDegreeData.json', JSON.stringify(degreeList, null, 4));
 
     console.log("Professor degree data saved successfully");
     res.json({
-        message: "Información académica y de posgrado guardada correctamente."
+        message: existingIndex !== -1 
+            ? "Información académica actualizada correctamente." 
+            : "Información académica guardada correctamente."
     });
 }
 
 export async function sendProfessorClassData(req, res) { // [HU-05]
-    console.log("\n");
-    console.log("Register professor teachable subjects.");
+console.log("\n");
+    console.log("Register / Update professor teachable subjects.");
 
     const {
         loginId,
-        subjects // ["Bases de Datos", "Estructuras de Datos", "Redes", "Inteligencia Artificial"]
+        subjects
     } = req.body;
 
     if (!Array.isArray(subjects) || subjects.length === 0) {
@@ -137,28 +137,28 @@ export async function sendProfessorClassData(req, res) { // [HU-05]
         fs.readFileSync('./server/data/professorClassData.json')
     );
 
-    const isLoginIdDuplicated = classList.find(record => record.loginId === loginId);
+    const existingIndex = classList.findIndex(record => record.loginId === loginId);
 
-    if (isLoginIdDuplicated) {
-        console.log("loginId already has class data registered.");
-        return res.status(400).json({
-            error: "Este docente ya tiene temáticas registradas. Considere actualizarlas en su lugar."
-        });
-    }
-
-    console.log("loginId is new for class data.");
-    const newClassRecord = {
+    const updatedClassRecord = {
         loginId,
-        subjects // se guarda en el mismo orden recibido, de mayor a menor experiencia
+        subjects
     };
 
-    classList.push(newClassRecord);
+    if (existingIndex !== -1) {
+        console.log(`Updating subjects for loginId: ${loginId}`);
+        classList[existingIndex] = updatedClassRecord;
+    } else {
+        console.log(`Adding new subjects for loginId: ${loginId}`);
+        classList.push(updatedClassRecord);
+    }
 
     console.log("Saving professor class data JSON...");
     fs.writeFileSync('./server/data/professorClassData.json', JSON.stringify(classList, null, 4));
 
     console.log("Professor class data saved successfully");
     res.json({
-        message: "Temáticas del docente guardadas correctamente."
+        message: existingIndex !== -1 
+            ? "Temáticas del docente actualizadas correctamente." 
+            : "Temáticas del docente guardadas correctamente."
     });
 }
