@@ -1,5 +1,5 @@
 export default class Class {
-    #studentId;
+    #studentId; // should be loginId from instance of User class.
     #classId;
     #term1 = [0, 0, 0, 0, 0];
     #term1final = 0;

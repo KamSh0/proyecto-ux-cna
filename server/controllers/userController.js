@@ -104,7 +104,7 @@ export async function requestGetActiveUser(req, res) {
     }
 }
 
-export async function admin_requestCreateNewUser(req, res) {
+export async function admin_requestCreateNewUser(req, res) { // [HU-13; 14; 15; 16]
     console.log("\n");
     console.log("Admin: Request new user creation.");
     const {
@@ -129,7 +129,7 @@ export async function admin_requestCreateNewUser(req, res) {
         })
     }
 
-    console.log("loginId is new.")
+    console.log("loginId is new.");
     const newUser = {
         firstName: firstName,
         lastName: lastName,
@@ -137,9 +137,9 @@ export async function admin_requestCreateNewUser(req, res) {
         loginId: loginId,
         role: role,
     }
-    console.log("Hashing password.")
+    console.log("Hashing password.");
     newUser.password = await bcrypt.hash(password, 12);
-    console.log("Password hashed.")
+    console.log("Password hashed.");
 
     userList.push(newUser);
 

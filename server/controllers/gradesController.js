@@ -1,4 +1,4 @@
-// Backend Grades controller
+// Backend Grades controller [EP-03]
 import fs from 'fs';
 import { activeClass } from '../state/appState.js';
 
@@ -30,7 +30,24 @@ export async function findClassesByStudentId(req, res) {
     });
 }
 
-export async function findStudentsByClassId(req, res) {
+async function findClassNames(classIdArray) {
+    console.log("\n")
+    console.log("Class name data request (by classId).");
+    console.log("Reading class info...");
+    const classInfoList = JSON.parse(
+        fs.readFileSync('./server/data/classInfoData.json')
+    );
+
+    let classWithNames = [[]];
+
+    for (let i in classIdArray) {
+        classWithNames[i].push(classInfoList.filter(class_ => class_.classId === classIdArray[i]).classId);
+        classWithNames[i].push(classInfoList.filter(class_ => class_.classId === classIdArray[i]).className);
+    }
+
+}
+
+export async function findStudentsByClassId(req, res) { 
     console.log("\n")
     console.log("Student data request (by classId).");
     const {
@@ -58,7 +75,7 @@ export async function findStudentsByClassId(req, res) {
     });
 }
 
-export async function sendGradesForTerm(req, res) {
+export async function sendGradesForTerm(req, res) { // [HU-06; 07]
     const {
         studentId,
         classId,
@@ -138,7 +155,7 @@ export async function sendGradesForTerm(req, res) {
                 error: "El periodo de seguimiento no ha sido encontrado. Por favor ingrese un periodo válido."
             })
     }
-    console.log("Calculating totals...")
+    console.log("Calculating totals...");
     activeClass.calcTerm1Total();
     activeClass.calcTerm2Total();
     activeClass.calcTerm3Total();
@@ -173,3 +190,4 @@ export async function sendGradesForTerm(req, res) {
         message: `La(s) calificación(es) ${grades}, para el periodo de seguimiento ${term}, del estudiante ${studentId} en la clase ${classId} han sido modificadas.`
     })
 }
+

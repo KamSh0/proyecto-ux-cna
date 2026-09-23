@@ -3,7 +3,6 @@ export default class User {
     #lastName;
     #document;
     #loginId;
-    #userId;
     #role;
     #password;
     
@@ -14,7 +13,7 @@ export default class User {
         this.#lastName = loginData.lastName;
         this.#document = loginData.document;
         this.#role = loginData.role;
-        this.#userId = loginData.userId;
+        this.#loginId = loginData.loginId
     }
 
     instanceLogout() {
@@ -22,8 +21,6 @@ export default class User {
         this.#lastName = undefined;
         this.#document = undefined;
         this.#role = undefined;
-        this.#userId = undefined;
+        this.#loginId = undefined;
     }
-
-    
 }
