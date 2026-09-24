@@ -23,4 +23,48 @@ export default class User {
         this.#role = undefined;
         this.#loginId = undefined;
     }
+
+    get firstName() {
+        return this.#firstName;
+    }
+
+    get lastName() {
+        return this.#lastName;
+    }
+
+    get document() {
+        return this.#document;
+    }
+
+    get loginId() {
+        return this.#loginId;
+    }
+
+    get role() {
+        return this.#role;
+    }
+
+    get password() {
+        return this.#password;
+    }
+
+    set firstName(firstName) {
+        this.#firstName = firstName;
+    }
+
+    set lastName(lastName) {
+        this.#lastName = lastName;
+    }
+
+    set loginId(loginId) {
+        this.#loginId = loginId;
+    }
+
+    set role(role) {
+        this.#role = role;
+    }
+
+    set password(password) {
+        this.#password = password;
+    }
 }

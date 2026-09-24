@@ -1,6 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import userRoutes from './server/routes/userRoutes.js';
+import siteRoutes from './server/routes/siteRoutes.js';
 
 const app = express();
 const PORT = 3033;
@@ -14,6 +15,7 @@ app.use(session({
 }))
 
 app.use(userRoutes);
+app.use(siteRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servidor funcionando en http://localhost:${PORT}`);

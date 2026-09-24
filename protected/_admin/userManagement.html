@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <title>Administar Usuarios - Colegio Nacional del Aprendizaje</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Administración - Colegio Nacional del Aprendizaje">
+        <link rel="stylesheet" href="./styles/admin.css">
+    </head>
+
+    <body>
+        <h3>Crear Nuevo Usuario</h3>4
+        <form id="form-newUser">
+            <h4>Datos Personales</h4>
+            <input type="text" id="newUser-firstName" placeholder="Nombres" required>
+            <input type="text" id="newUser-lastName" placeholder="Apellidos" required>
+            <input type="text" id="newUser-document" placeholder="Número de Documento" required>
+            <h4>Datos del Sistema</h4>
+            <input type="text" id="newUser-loginId" placeholder="ID de Usuario" required>
+            <input type="text" id="newUser-password" placeholder="Contraseña de Usuario" required>
+            <select id="newUser-role" required>
+                <option>Estudiante</option>
+                <option>Docente</option>
+                <option>Administrador</option>
+            </select>
+            <button type="submit">Crear</button>
+            <script type="module" defer>
+                import { uc_createNewUser } from  '../controllers/userProtectedController.js'
+            </script>
+        </form>
+    </body>
+</html>

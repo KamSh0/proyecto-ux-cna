@@ -1,6 +1,10 @@
 [
     {
+        "firstName": "Administrador 1",
+        "lastName": "[USUARIO INICIAL SISTEMA]",
+        "document": "3141592",
         "loginId": "1123581321",
+        "role": "ADMIN",
         "password": "$2b$12$sKyWgLfQgbg.bjxlm.tmTubLp.qU51UDIC6D/AoAXHKGhqeJa9bCS"
     }
 ]

@@ -14,10 +14,11 @@
             <input type="password" id="userLoginPassword" placeholder="Contraseña" required>
             <button type="submit">Iniciar Sesión</button>
             <script type="module" defer>
-                import { uc_login } from './controller/userFrontController.js'
+                import { uc_login } from './controllers/userFrontController.js'
 
-                uc_login();
+                uc_login(); // Implicit acceptance criteria for [INI-01]
             </script>
         </form>
+        <a href="/admin">Panel Admin</a>
     </body>
 </html>

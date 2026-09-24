@@ -4,6 +4,7 @@ import { $aux_view_showLoginResult } from "../view/userView.js";
 
 export async function uc_login() {
     console.log("\n");
+    console.log("Frontend login request...")
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 

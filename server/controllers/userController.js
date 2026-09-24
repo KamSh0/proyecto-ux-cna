@@ -45,7 +45,7 @@ export async function requestLogin(req, res) {
         lastName: foundUser.lastName,
         document: foundUser.document,
         role: foundUser.role,
-        loginId: foundUser.loginData,
+        loginId: foundUser.loginId,
     }
 
     console.log("Creating user instance...");
@@ -54,6 +54,8 @@ export async function requestLogin(req, res) {
     console.log("Creating user session...")
     req.session.loggedId = activeUser.loginId;
     req.session.role = activeUser.role;
+    console.log(`Session: ${req.session.loggedId}`);
+    console.log(`Role: ${req.session.role}`);
 
     console.log("Logged in successfully.");
     return res.json({
@@ -138,6 +140,19 @@ export async function admin_requestCreateNewUser(req, res) { // [HU-13; 14; 15; 
         loginId: loginId,
         role: role,
     }
+
+    console.log("Checking role validity...");
+    const roleValidity = await isRoleValid(newUser.role);
+    
+    if (roleValidity) {
+        console.log("Role is valid.");
+    } else {
+        console.log("Role is not valid.");
+        return res.status(400).json({
+            error: "El rol ingresado no es válido."
+        })
+    }
+
     console.log("Hashing password.");
     newUser.password = await bcrypt.hash(password, 12);
     console.log("Password hashed.");
@@ -151,4 +166,13 @@ export async function admin_requestCreateNewUser(req, res) { // [HU-13; 14; 15; 
     res.json({
         message: "Usuario creado correctamente."
     });
+}
+
+async function isRoleValid(role) {
+    switch (role) {
+        case "STUDENT": return true;
+        case "PROFESSOR": return true;
+        case "ADMIN": return true;
+        default: return false;
+    }
 }
