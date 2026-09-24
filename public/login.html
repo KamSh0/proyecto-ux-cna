@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <title>Iniciar Sesión - Colegio Nacional del Aprendizaje</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Inicio - Colegio Nacional del Aprendizaje">
+        <link rel="stylesheet" href="./styles/home.css">
+    </head>
+
+    <body>
+        <form id="loginForm">
+            <input type="text" id="userLoginId" placeholder="ID de Usuario" required>
+            <input type="password" id="userLoginPassword" placeholder="Contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+            <script type="module" defer>
+                import { uc_login } from './controller/userFrontController.js'
+
+                uc_login();
+            </script>
+        </form>
+    </body>
+</html>

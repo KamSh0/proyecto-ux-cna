@@ -1,6 +1,6 @@
 import express from 'express';
-import { admin_requestCreateNewUser, requestLogin, requestLogout } from '../controllers/userController';
-import { requiresRole } from '../middlewares/RoleMiddleware';
+import { admin_requestCreateNewUser, requestLogin, requestLogout } from '../controllers/userController.js';
+import { requiresRole } from '../middlewares/roleMiddleware.js';
 
 
 const router = express.Router();

@@ -3,7 +3,8 @@ import fs from 'fs/promises';
 import { activeClass } from '../state/appState.js';
 
 export async function findClassesByStudentId(req, res) {
-    console.log("\nClass data request (by studentId).");
+    console.log("\n");
+    console.log("Class data request (by studentId).");
     const { studentId } = req.body;
 
     if (!studentId) {
