@@ -7,7 +7,7 @@ export function requiresRole(requiredRole) {
         if (!req.session || !req.session.loggedId) {
             console.log("Not logged in");
             return res.status(401).json({
-                mensaje: "Debes iniciar sesión para realizar esta acción."
+                error: "Debes iniciar sesión para realizar esta acción."
             });
         }
 
@@ -15,7 +15,7 @@ export function requiresRole(requiredRole) {
         if (req.session.role !== requiredRole) {
             console.log(`Access denied: Required role '${requiredRole}', got '${req.session.role}'`);
             return res.status(403).json({
-                mensaje: "No tienes los permisos necesarios para realizar esta acción."
+                error: "No tienes los permisos necesarios para realizar esta acción."
             });
         }
 

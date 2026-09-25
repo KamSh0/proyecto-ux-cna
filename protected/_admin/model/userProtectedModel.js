@@ -8,4 +8,6 @@ export async function api_createNewUser(newUser) {
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify(newUser)
     })
+
+    return res.json();
 }

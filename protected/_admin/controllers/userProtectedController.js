@@ -1,4 +1,4 @@
-import { $aux_view_showError } from "../../public/view/errorView.js";
+import { $aux_view_showError } from "../../../view/errorView.js";
 import { api_createNewUser } from "../model/userProtectedModel.js";
 import { $aux_view_showCreateNewUserResult } from "../view/userProtectedView.js";
 
@@ -6,12 +6,12 @@ export async function uc_createNewUser() {
     document.getElementById("form-newUser").addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        try {
-            const newUserRole = await defineRole(document.getElementById("newUser-role").value);
-        } catch (error) {
-            $aux_view_showError(error);
-        }
+        const newUserRole = await defineRole(document.getElementById("newUser-role").value);
 
+        if (newUserRole === false) {
+            $aux_view_showError("Por favor, defina el rol correctamente: Estudiante, Docente o Administrador.");
+            return;
+        }
 
         const newUser = {
             firstName: document.getElementById("newUser-firstName").value,
@@ -35,7 +35,7 @@ export async function uc_createNewUser() {
 async function defineRole(role) {
     switch (role) {
         case "Estudiante":
-            return "STUDENT"
+            return "STUDENT";
         
         case "Docente":
             return "PROFESSOR";
@@ -44,6 +44,6 @@ async function defineRole(role) {
             return "ADMIN";
 
         default:
-            return new Error("Error: Rol no definido correctamente.")
+            return false;
     }
 }

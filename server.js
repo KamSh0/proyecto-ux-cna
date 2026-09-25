@@ -18,5 +18,5 @@ app.use(userRoutes);
 app.use(siteRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Servidor funcionando en http://localhost:${PORT}`);
+    console.log(`Server listening in http://localhost:${PORT}`);
 })

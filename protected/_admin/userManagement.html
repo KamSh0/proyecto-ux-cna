@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <h3>Crear Nuevo Usuario</h3>4
+        <h3>Crear Nuevo Usuario</h3>
         <form id="form-newUser">
             <h4>Datos Personales</h4>
             <input type="text" id="newUser-firstName" placeholder="Nombres" required>
@@ -25,7 +25,9 @@
             </select>
             <button type="submit">Crear</button>
             <script type="module" defer>
-                import { uc_createNewUser } from  '../controllers/userProtectedController.js'
+                import { uc_createNewUser } from  './controllers/userProtectedController.js'
+
+                uc_createNewUser();
             </script>
         </form>
     </body>
