@@ -1,7 +1,3 @@
-export async function api_getActiveUser() {
-    
-}
-
 export async function api_createNewUser(newUser) {
     const res = await fetch('/api/user/admin/create-new-user', {
         method: "POST",

@@ -97,7 +97,6 @@ export async function requestGetActiveUser(req, res) {
             lastName: activeUser.lastName,
             document: activeUser.document,
             role: activeUser.role,
-            loginId: activeUser.loginId
         })
     } else {
         console.log("Unexpected attempt to get active user data without an active session (?)");

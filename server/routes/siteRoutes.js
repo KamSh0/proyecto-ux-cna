@@ -37,5 +37,9 @@ router.get('/userManagement.html', requiresRole('ADMIN'), (req, res) => {
     res.sendFile(path.join(protectedRoot, 'userManagement.html'));
 });
 
+router.get('/admin.css', requiresRole('ADMIN'), (req, res) => {
+    res.sendFile(path.join(protectedRoot, 'admin.css'));
+});
+
 
 export default router;

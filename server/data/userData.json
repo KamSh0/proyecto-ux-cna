@@ -14,5 +14,13 @@
         "loginId": "101000001",
         "role": "STUDENT",
         "password": "$2b$12$0Gtmeohz20ioJSJHN8lGhOgg8qmtAr01gRQQmw00HaFPh05lm2Xl2"
+    },
+    {
+        "firstName": "Profesor",
+        "lastName": "Ejemplo",
+        "document": "2718281828",
+        "loginId": "201000001",
+        "role": "PROFESSOR",
+        "password": "$2b$12$BZA0LNs6lnWO.Fq6BMy2.uVfYKwyT3uOPbuXtmneutHGjKFM8p5km"
     }
 ]
