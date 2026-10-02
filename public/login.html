@@ -5,13 +5,16 @@
         <title>Iniciar Sesión - Colegio Nacional del Aprendizaje</title>
         <meta charset="utf-8">
         <meta name="description" content="Inicio - Colegio Nacional del Aprendizaje">
-        <link rel="stylesheet" href="./styles/home.css">
+        <link rel="stylesheet" href="./view/styles/home.css">
     </head>
 
     <body>
-        <div class="login-container">
+        <div class="login-block">
             <form id="loginForm">
+                <h5>Iniciar Sesión</h5>
+                <h6>Usuario</h6>
                 <input type="text" id="userLoginId" placeholder="ID de Usuario" required>
+                <h6>Contraseña</h6>
                 <input type="password" id="userLoginPassword" placeholder="Contraseña" required>
                 <button type="submit">Iniciar Sesión</button>
                 <script type="module" defer>
@@ -21,8 +24,5 @@
                 </script>
             </form>
         </div>
-        <a href="/admin.html">Menú Admin</a>
-        <a href="/professor.html">Menú Docente</a>
-        <a href="/student.html">Menú Estudiante</a>
     </body>
 </html>

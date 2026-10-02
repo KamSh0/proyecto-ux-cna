@@ -1,6 +1,6 @@
 import { api_getActiveUser, api_sendLoginRequest } from "../model/userFront.js";
 import { $aux_view_showError } from "../view/errorView.js";
-import { $aux_view_showActiveUserData, $aux_view_showLoginResult } from "../view/userView.js";
+import { $aux_view_showActiveUserData, $aux_view_showLoginResult, view_showActiveUserData } from "../view/userView.js";
 
 export async function uc_login() {
     console.log("\n");
@@ -27,11 +27,16 @@ export async function uc_getActiveUserData() {
     const res = await api_getActiveUser();
 
     if (res.error) {
-        $aux_view_showError(res.error);
-        return;
+        console.log("Session does not exist.")
+        return "INACTIVE";
     }
 
-    const userInfo = document.querySelector('.logged-user-info-container');
+    const userInfo = document.getElementById("active-user-data");
+    const userInfoColumns = document.getElementById("user-info-columns");
 
-    $aux_view_showActiveUserData(res, userInfo);
+    view_showActiveUserData(res, userInfo, userInfoColumns);
+}
+
+export async function uc_logout(params) {
+    
 }
