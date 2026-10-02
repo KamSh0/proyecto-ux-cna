@@ -1,6 +1,7 @@
 export default class Class {
     #studentId; // should be loginId from instance of User class.
     #classId;
+    #gradeLevel;
     #term1 = [0, 0, 0, 0, 0];
     #term1final = 0;
     #term2 = [0, 0, 0, 0, 0];
@@ -16,6 +17,10 @@ export default class Class {
 
     set classId(classId) {
         this.#classId = classId;
+    }
+
+    set gradeLevel(gradeLevel) {
+        this.#gradeLevel = gradeLevel;
     }
 
     set term1(term1) {
@@ -56,6 +61,10 @@ export default class Class {
 
     get classId() {
         return this.#classId
+    }
+
+    get gradeLevel() {
+        return this.#gradeLevel;
     }
 
     get term1() {
