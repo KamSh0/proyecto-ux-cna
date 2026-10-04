@@ -17,32 +17,20 @@
                     <p>Sistema de administración</p>
                 </span>
                 <div id="active-user-data">
-                    <script type="module">
-                        import { uc_getActiveUserData } from './controllers/userFrontController.js';
-                        import { view_showLoginButton } from './view/userView.js';
-                        const isActive = await uc_getActiveUserData();
-
-                        if (isActive === "INACTIVE") {
-                            await view_showLoginButton(isActive);
-                        }
-                    </script>
-                    <div id="user-info-columns"></div>
+                    <svg width="40" height="40" fill="currentColor" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"></path></svg>
+                    <div id="user-info-columns"><span>Linus Torvalds</span><span>Administrador</span></div>
+                    <button id="logout">Cerrar Sesión</button>
                 </div>
             </div>
         </header>
         <div class="main-box">
             <aside>
                 <div class="sidebar">
-                    <a href="./" class="sidebar-item">Inicio</a>
+                    <a href="./" class="sidebar-item active">Inicio</a>
                     <a href="/admin/userManagement.html" class="sidebar-item">Hojas de vida estudiantes</a>
                     <a href="/admin/userManagement.html" class="sidebar-item">Hojas de vida docentes</a>
                     <a href="/admin/userManagement.html" class="sidebar-item">Capacitaciones</a>
                     <a href="/admin/userManagement.html" class="sidebar-item">Seguridad y usuarios</a>
-                    <script type="module">
-                        import { view_activeSidebarSelection } from './view/userView.js'
-
-                        view_activeSidebarSelection();
-                    </script>
                 </div>
             </aside>
             <main>
