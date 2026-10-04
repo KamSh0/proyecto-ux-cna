@@ -58,12 +58,12 @@
     --color-amber-accent: #C9910D;
     --color-slate: #6B7280;
 
-    --color-navy-ink-hover: #263257;      /* navy-ink + 8% más claro */
-    --color-amber-accent-hover: #B37F0B;  /* amber-accent 10% más oscuro, para hover sobre fondo claro */
-    --color-amber-accent-subtle: #FBF0D9; /* amber-accent al 12% opacidad sobre --paper, para fondos de badge/highlight */
+    --color-navy-ink-hover: #263257;      
+    --color-amber-accent-hover: #B37F0B;  
+    --color-amber-accent-subtle: #FBF0D9; 
 
-    --color-border-subtle: #E5E3DD;       /* para divisores sutiles sobre --paper */
-    --color-border-on-dark: rgba(250, 249, 246, 0.12); /* divisores sutiles sobre --navy-ink */
+    --color-border-subtle: #E5E3DD;       
+    --color-border-on-dark: rgba(250, 249, 246, 0.12); 
 
     --radius-2: 8px;
     --radius-1: 4px;
@@ -134,15 +134,21 @@
 .top-bar #active-user-data {
     display: flex;
     align-items: center;
+    
 }
 
 .top-bar #active-user-data span {
     font-size: 24px;
+    padding: 0;
+    margin-left: 16px;
+    margin-right: 32px;
 }
 
 .top-bar #active-user-data span + span {
     font-size: 16px;
     display: block;
+    font-weight: 400;
+    color: var(--color-slate)
 }
 
 .top-bar #active-user-data button {

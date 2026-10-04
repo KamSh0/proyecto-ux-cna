@@ -14,25 +14,36 @@ export async function $aux_view_showActiveUserData(data, container) {
     }
 }
 
-export async function view_showActiveUserData(data, container, columns) {
-    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    icon.setAttribute("width", "32");
-    icon.setAttribute("height", "32");
-    icon.setAttribute("fill", "currentColor");
-    icon.setAttribute("viewBox", "0 0 16 16");
-    icon.innerHTML = `<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>`;
-    container.appendChild(icon)
+export async function view_showActiveUserData(data, container, rows) {
+    const icon = await view_$drawUserIcon();
+    container.insertBefore(icon, rows);
+
+    switch (data.role) {
+        case "ADMIN": data.role = "Administrador"; break;
+        case "STUDENT": data.role = "Estudiante"; break;
+        case "PROFESSOR": data.role = "Docente"; break;
+    }
 
     for (const [key, val] of Object.entries(data)) {
         let datum = document.createElement('span');
         datum.textContent = val;
-        columns.appendChild(datum);
+        rows.appendChild(datum);
     }
     
     const logoutButton = document.createElement('button');
     logoutButton.id = "logout";
     logoutButton.textContent = "Cerrar Sesión"
     container.appendChild(logoutButton);
+}
+
+async function view_$drawUserIcon() {
+    const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    icon.setAttribute("width", "40");
+    icon.setAttribute("height", "40");
+    icon.setAttribute("fill", "currentColor");
+    icon.setAttribute("viewBox", "0 0 16 16");
+    icon.innerHTML = `<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>`;
+    return icon;
 }
 
 export async function view_showLoginButton(flag) {
