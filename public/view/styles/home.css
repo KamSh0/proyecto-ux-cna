@@ -35,6 +35,9 @@
 }
 
 :root {
+    /*
+    Deprecated, might reuse later:
+
     --color-primary: #92dce5;
     --color-secondary: #2b2d42;
     --color-tertiary: #f8f8fa;
@@ -50,17 +53,20 @@
     --color-light-4: #cbcdf2;
 
     --color-background-1: #eee;
+    */
 
     --color-navy-ink: #1C2541;
     --color-navy-soft: #3A4A6B;
     --color-paper: #FAF9F6;
     --color-surface: #FFFFFF;
-    --color-amber-accent: #C9910D;
+    --color-amber-accent: #92dce5;
     --color-slate: #6B7280;
 
     --color-navy-ink-hover: #263257;      
-    --color-amber-accent-hover: #B37F0B;  
+    --color-amber-accent-hover: #a2ecf5;  
     --color-amber-accent-subtle: #FBF0D9; 
+
+    --color-amber-accent-disabled: #62acb5;  
 
     --color-border-subtle: #E5E3DD;       
     --color-border-on-dark: rgba(250, 249, 246, 0.12); 
@@ -333,7 +339,7 @@ body {
     font-family: inherit;
     border: none;
     cursor: pointer;
-    transition: background-color 120ms ease-in-out;
+    transition: background-color 96ms ease-in-out;
 }
 
 .login-block #loginForm button:hover {
@@ -346,7 +352,7 @@ body {
 }
 
 .login-block #loginForm button:active {
-    background-color: #9C6C09;
+    background-color: var(--color-amber-accent-disabled)
 }
 
 .login-block #loginForm button:disabled {
