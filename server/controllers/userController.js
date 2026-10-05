@@ -165,6 +165,147 @@ export async function admin_requestCreateNewUser(req, res) { // [HU-13; 14; 15; 
     });
 }
 
+export async function admin_requestUpdateUser(req, res) { // [HU-XX]
+    console.log("\n");
+    console.log("Admin: Request user update.");
+
+    const {
+        loginId,       // identifica QUÉ usuario se va a modificar — obligatorio
+        firstName,
+        lastName,
+        document,
+        newLoginId,    // opcional: si el admin quiere CAMBIAR el loginId
+        role,
+        password       // opcional: solo si se va a cambiar la contraseña
+    } = req.body;
+
+    if (!loginId) {
+        console.log("Error: No loginId provided to identify the user.");
+        return res.status(400).json({
+            error: "Se requiere el ID de inicio de sesión del usuario a modificar."
+        });
+    }
+
+    const userList = JSON.parse(
+        fs.readFileSync('./server/data/userData.json')
+    );
+
+    const userIndex = userList.findIndex(user => user.loginId === loginId);
+
+    if (userIndex === -1) {
+        console.log("User not found, cannot update.");
+        return res.status(404).json({
+            error: "No se encontró ningún usuario con ese ID de inicio de sesión."
+        });
+    }
+
+    const existingUser = userList[userIndex];
+
+    // Si se quiere cambiar el loginId, verificar que el NUEVO valor no choque con OTRO usuario
+    if (newLoginId && newLoginId !== loginId) {
+        console.log("Checking if new loginId is already taken by another user...");
+        const isNewLoginIdTaken = userList.some(
+            user => user.loginId === newLoginId && user.loginId !== loginId
+        );
+
+        if (isNewLoginIdTaken) {
+            console.log("New loginId already exists, cannot update.");
+            return res.status(400).json({
+                error: "El nuevo ID de inicio de sesión ya está en uso por otro usuario."
+            });
+        }
+    }
+
+    // Validar el rol SOLO si se envió uno nuevo
+    if (role !== undefined) {
+        console.log("Checking role validity...");
+        const roleValidity = await isRoleValid(role);
+
+        if (!roleValidity) {
+            console.log("Role is not valid.");
+            return res.status(400).json({
+                error: "El rol ingresado no es válido."
+            });
+        }
+    }
+
+    console.log("Applying updates...");
+    const updatedUser = {
+        ...existingUser,
+        firstName: firstName !== undefined ? firstName : existingUser.firstName,
+        lastName: lastName !== undefined ? lastName : existingUser.lastName,
+        document: document !== undefined ? document : existingUser.document,
+        loginId: newLoginId !== undefined ? newLoginId : existingUser.loginId,
+        role: role !== undefined ? role : existingUser.role,
+    };
+
+    // La contraseña se re-hashea SOLO si se envió una nueva
+    if (password !== undefined) {
+        console.log("New password provided, hashing...");
+        updatedUser.password = await bcrypt.hash(password, 12);
+        console.log("Password hashed.");
+    }
+    // si no se envió password, updatedUser.password ya quedó igual al existente, por el spread inicial
+
+    userList[userIndex] = updatedUser; // reemplaza SOLO ese registro, en su misma posición
+
+    console.log("Saving user data JSON...");
+    fs.writeFileSync('./server/data/userData.json', JSON.stringify(userList, null, 4));
+
+    console.log("User data updated successfully");
+    res.json({
+        message: "Usuario actualizado correctamente."
+    });
+}
+
+export async function admin_findUsersByName(req, res) {
+    console.log("\n");
+    console.log("Admin: Request list of user by chars: ")
+    
+    const {
+        charsToFind
+    } = req.body
+
+    console.log("Searching for: " + charsToFind);
+
+    if (charsToFind === undefined || charsToFind === "" || charsToFind === Number(charsToFind) || charsToFind === " ") {
+        console.log("Bad search request.");
+        return res.status(400).json({
+            error: "Por favor ingrese caracteres válidos."
+        });
+    }
+
+    const charsFilter = charsToFind.trim().toLowerCase().split(/\s+/); // Usar >=1 espacios como separador
+    console.log("Filtered chars: " + charsFilter)
+
+    const userList = JSON.parse(
+        fs.readFileSync('./server/data/userData.json')
+    );
+
+    const foundUsers = userList.filter(user => {
+        const fullName = `${user.name} ${user.lastname}`.toLowerCase(); // Armar string de nombres y apellidos
+        return charsFilter.every(word => fullName.includes(word)); // Comparar con array de input creado
+    });
+
+    foundUsers.forEach(foundUser => {
+        foundUser.password = undefined; // sudo apt install opsec
+    });
+
+    console.log("Found users: " + foundUsers);
+
+    if (!foundUsers) {
+        console.log("Unsuccesful search.");
+        return res.json ({
+            message: "No se encontró ningún usuario."
+        })
+    } else {
+        console.log("Succesful search.");
+        res.json({
+            message: foundUsers
+        })
+    }
+}
+
 async function isRoleValid(role) {
     switch (role) {
         case "STUDENT": return true;

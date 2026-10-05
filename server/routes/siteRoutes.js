@@ -33,7 +33,7 @@ router.get('/admin.html', requiresRole('ADMIN'), (req, res) => {
     res.sendFile(path.join(protectedRoot, 'admin.html'));
 });
 
-router.get('/userManagement.html', requiresRole('ADMIN'), (req, res) => {
+router.get('/user-management.html', requiresRole('ADMIN'), (req, res) => {
     res.sendFile(path.join(protectedRoot, 'userManagement.html'));
 });
 

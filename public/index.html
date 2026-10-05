@@ -33,11 +33,60 @@
         <div class="main-box">
             <aside>
                 <div class="sidebar">
-                    <a href="./" class="sidebar-item">Inicio</a>
-                    <a href="/admin/userManagement.html" class="sidebar-item">Hojas de vida estudiantes</a>
-                    <a href="/admin/userManagement.html" class="sidebar-item">Hojas de vida docentes</a>
-                    <a href="/admin/userManagement.html" class="sidebar-item">Capacitaciones</a>
-                    <a href="/admin/userManagement.html" class="sidebar-item">Seguridad y usuarios</a>
+                    <div>
+                        <label for="menu-toggle-0" class="sidebar-dropdown">
+                            <span>Inicio</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" name="sidebar-option" id="menu-toggle-1" class="sidebar-toggle">
+                        <label for="menu-toggle-1" class="sidebar-dropdown">
+                            <span>Seguridad y usuarios</span>
+                        </label>
+                        <ul class="nav-list">
+                            <li><a href="/admin/user-list.html" class="sidebar-item">Gestión de usuarios</a></li>
+                            <li><a href="/admin/user-profiles.html" class="sidebar-item">Gestión de perfiles</a></li>
+                            <li><a href="/admin/user-accesses.html" class="sidebar-item">Gestión de accesos</a></li>
+                            <li><a href="/admin/admin-dir.html" class="sidebar-item">Directorio administrador</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <input type="radio" name="sidebar-option" id="menu-toggle-2" class="sidebar-toggle">
+                        <label for="menu-toggle-2" class="sidebar-dropdown">
+                            <span>Seguridad y usuarios</span>
+                        </label>
+                        <ul class="nav-list">
+                            <li><a href="/admin/user-list.html" class="sidebar-item">Gestión de usuarios</a></li>
+                            <li><a href="/admin/user-profiles.html" class="sidebar-item">Gestión de perfiles</a></li>
+                            <li><a href="/admin/user-accesses.html" class="sidebar-item">Gestión de accesos</a></li>
+                            <li><a href="/admin/admin-dir.html" class="sidebar-item">Directorio administrador</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <input type="radio" name="sidebar-option" id="menu-toggle-3" class="sidebar-toggle">
+                        <label for="menu-toggle-3" class="sidebar-dropdown">
+                            <span>Seguridad y usuarios</span>
+                        </label>
+                        <ul class="nav-list">
+                            <li><a href="/admin/user-list.html" class="sidebar-item">Gestión de usuarios</a></li>
+                            <li><a href="/admin/user-profiles.html" class="sidebar-item">Gestión de perfiles</a></li>
+                            <li><a href="/admin/user-accesses.html" class="sidebar-item">Gestión de accesos</a></li>
+                            <li><a href="/admin/admin-dir.html" class="sidebar-item">Directorio administrador</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <input type="radio" name="sidebar-option" id="menu-toggle-4" class="sidebar-toggle">
+                        <label for="menu-toggle-4" class="sidebar-dropdown">
+                            <span>Seguridad y usuarios</span>
+                        </label>
+                        <ul class="nav-list">
+                            <li><a href="/admin/user-list.html" class="sidebar-item">Gestión de usuarios</a></li>
+                            <li><a href="/admin/user-profiles.html" class="sidebar-item">Gestión de perfiles</a></li>
+                            <li><a href="/admin/user-accesses.html" class="sidebar-item">Gestión de accesos</a></li>
+                            <li><a href="/admin/admin-dir.html" class="sidebar-item">Directorio administrador</a></li>
+                        </ul>
+                    </div>
+
                     <script type="module">
                         import { view_activeSidebarSelection } from './view/userView.js'
 

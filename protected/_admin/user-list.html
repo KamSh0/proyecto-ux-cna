@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <title>Lista de Usuarios - Colegio Nacional del Aprendizaje</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Administración - Colegio Nacional del Aprendizaje">
+        <link rel="stylesheet" href="./styles/admin.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="top-bar">
+                <img src="./view/logo.jpg" width="64px" height="64px" id="school-logo">
+                <span>
+                    Colegio Nacional del Aprendizaje
+                    <p>Sistema de administración</p>
+                </span>
+                <div id="active-user-data">
+                    <script type="module">
+                        import { uc_getActiveUserData } from './controllers/userFrontController.js';
+                        import { view_showLoginButton } from './view/userView.js';
+                        const isActive = await uc_getActiveUserData();
+
+                        if (isActive === "INACTIVE") {
+                            await view_showLoginButton(isActive);
+                        }
+                    </script>
+                    <div id="user-info-columns"></div>
+                </div>
+            </div>
+        </header>
+        <div class="main-box">
+            <aside>
+                <div class="sidebar">
+                    <a href="./" class="sidebar-item">Inicio</a>
+                    <a href="/admin/userManagement.html" class="sidebar-item">Hojas de vida estudiantes</a>
+                    <a href="/admin/userManagement.html" class="sidebar-item">Hojas de vida docentes</a>
+                    <a href="/admin/userManagement.html" class="sidebar-item">Capacitaciones</a>
+                    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                    <a href="/admin/user-list.html" class="sidebar-item">Seguridad y usuarios</a>
+                    <script type="module">
+                        import { view_activeSidebarSelection } from './view/userView.js'
+
+                        view_activeSidebarSelection();
+                    </script>
+                </div>
+            </aside>
+            <main>
+                <div class="content">
+                    <p class="breadcrumb">Inicio</p>
+                    <p class="welcome">
+                        Bienvenido
+                        <span>Sistema de Información Colegio Nacional del Aprendizaje</span>
+                    </p>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
