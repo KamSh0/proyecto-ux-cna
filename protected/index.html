@@ -18,15 +18,13 @@
                 </span>
                 <div id="active-user-data">
                     <script type="module">
-                        import { uc_getActiveUserData, uc_logout } from './controllers/userFrontController.js';
+                        import { uc_getActiveUserData } from './controllers/userFrontController.js';
                         import { view_showLoginButton } from './view/userView.js';
                         const isActive = await uc_getActiveUserData();
 
                         if (isActive === "INACTIVE") {
                             await view_showLoginButton(isActive);
                         }
-
-                        uc_logout();
                     </script>
                     <div id="user-info-columns"></div>
                 </div>
@@ -46,8 +44,8 @@
                             <span>Hoja de vida estudiantes</span>
                         </label>
                         <ul class="nav-list">
-                            <li><a href="/admin/user-list.html" class="sidebar-item">Módulo de estudiantes</a></li>
-                            <li><a href="/admin/user-profiles.html" class="sidebar-item">Módulo de padres</a></li>
+                            <li><a href="/admin/user-list.html" class="sidebar-item">Información de estudiantes</a></li>
+                            <li><a href="/admin/user-profiles.html" class="sidebar-item">Información de padres</a></li>
                         </ul>
                     </div>
                     <div>

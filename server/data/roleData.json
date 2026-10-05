@@ -1,0 +1,37 @@
+[
+    {
+        "roleId": "SUPER_ADMIN",
+        "roleName": "Administrador General",
+        "isSystem": true,
+        "permissions": {
+            "all": [
+                "admin"
+            ]
+        }
+    },
+    {
+        "roleId": "MOD_PROFESSORS",
+        "roleName": "Administrador de Profesores",
+        "isSystem": false,
+        "permissions": {
+            "professors": [
+                "read",
+                "write",
+                "admin"
+            ],
+            "students": [
+                "read"
+            ]
+        }
+    },
+    {
+        "roleId": "QUERY_STUDENTS",
+        "roleName": "Consulta de Estudiantes",
+        "isSystem": false,
+        "permissions": {
+            "students": [
+                "read"
+            ]
+        }
+    }
+]

@@ -1,4 +1,4 @@
-import { api_getActiveUser, api_sendLoginRequest } from "../model/userFront.js";
+import { api_getActiveUser, api_sendLoginRequest, api_sendLogoutRequest } from "../model/userFront.js";
 import { $aux_view_showError } from "../view/errorView.js";
 import { $aux_view_showActiveUserData, $aux_view_showLoginResult, view_showActiveUserData } from "../view/userView.js";
 
@@ -23,6 +23,22 @@ export async function uc_login() {
     })
 }
 
+export async function uc_logout() {
+    console.log("\n");
+    console.log("Frontend logout request...")
+    document.getElementById('logout').addEventListener('click', async (e) => {
+        const res = await api_sendLogoutRequest();
+
+        if (res.error) {
+            $aux_view_showError(res.error);
+        } else {
+            $aux_view_showError(res.message);
+            window.location.reload();
+        }
+    })
+}
+
+
 export async function uc_getActiveUserData() {
     const res = await api_getActiveUser();
 
@@ -35,8 +51,4 @@ export async function uc_getActiveUserData() {
     const userInfoColumns = document.getElementById("user-info-columns");
 
     view_showActiveUserData(res, userInfo, userInfoColumns);
-}
-
-export async function uc_logout(params) {
-    
 }

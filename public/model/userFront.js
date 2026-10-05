@@ -15,3 +15,11 @@ export async function api_getActiveUser() {
 
     return res.json();
 }
+
+export async function api_sendLogoutRequest() {
+    const res = await fetch('/api/user/logout', {
+        method: "POST"
+    });
+    
+    return res.json()
+}

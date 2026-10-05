@@ -4,32 +4,32 @@
 
 @font-face {
     font-family: "Inter";
-    src: url("./fonts/Inter-Regular.woff2") format("woff2");
+    src: url("../../../../view/styles/fonts/Inter-Regular.woff2") format("woff2");
     font-weight: 400;
 }
 
 @font-face {
     font-family: "Inter";
-    src: url("./fonts/Inter-Light.woff2") format("woff2");
+    src: url("../../../../view/styles/fonts/Inter-Light.woff2") format("woff2");
     font-weight: 200;
 }
 
 @font-face {
     font-family: "Inter";
-    src: url("./fonts/Inter-Bold.woff2") format("woff2");
+    src: url("../../../../view/styles/fonts/Inter-Bold.woff2") format("woff2");
     font-weight: 600;
 }
 
 @font-face {
     font-family: "Inter";
-    src: url("./fonts/Inter-Italic.woff2") format("woff2");
+    src: url("../../../../view/styles/fonts/Inter-Italic.woff2") format("woff2");
     font-weight: 400;
     font-style: italic;
 }
 
 @font-face {
     font-family: "Inter";
-    src: url("./fonts/Inter-BoldItalic.woff2") format("woff2");
+    src: url("../../../../view/styles/fonts/Inter-BoldItalic.woff2") format("woff2");
     font-weight: 600;
     font-style: italic;
 }
@@ -202,37 +202,37 @@ body {
     background-color: var(--color-navy-ink);
     color: var(--color-navy-soft);
     margin-left: 16px;
+    
 
     box-shadow: 0 1px 2px rgba(0,0,0,0.08); 
     border-radius: var(--radius-2);
 }
 
-.sidebar .sidebar-item {
+.sidebar .sidebar-dropdown {
+    display: block;
     padding: 8px;
-    font-weight: 400;
+    font-weight: 600;
     text-decoration: none;
     color: var(--color-paper);
     background-color: transparent;
     border-left: 3px solid transparent;
-    min-width: 192;
 
     border-radius: var(--radius-1);
     transition: background-color;
     transition-duration: 96ms;
 }
 
-.sidebar .sidebar-item:hover {
+.sidebar .sidebar-dropdown:hover {
     background-color: var(--color-navy-ink-hover);
     transition: background-color;
     transition-duration: 96ms;
 }
 
-.sidebar .sidebar-item.active {
+.sidebar .sidebar-dropdown.active {
     background-color: var(--color-navy-soft);
-    border: 3px solid var(--color-amber-accent);
-    border-right: 0;
-    border-top: 0;
-    border-bottom: 0;
+    border-left: 3px solid var(--color-amber-accent);
+    border-top: 1px solid var(--color-navy-soft);
+    border-bottom: 1px solid var(--color-navy-soft);
 }
 
 .content {
@@ -361,3 +361,80 @@ body {
     cursor: not-allowed;
 }
 
+
+/* Ocultar el checkbox de forma accesible */
+.sidebar input {
+    display: none;
+}
+
+/* Lista de enlaces en versión móvil (oculta por defecto) */
+.sidebar .nav-list {
+    flex-direction: column;
+    gap: 16px;
+    font-size: 16px;
+    width: 208px;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 16px;
+    display: flex;
+    list-style: none;
+
+    /* Configuración para la animación */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 250ms ease, 
+                padding-top 250ms ease,
+                padding-bottom 250ms ease,
+                opacity 150ms ease;
+}
+
+.nav-list a {
+    display: block;
+    color: var(--color-surface);
+    text-decoration: none;
+}
+
+.sidebar-toggle:checked ~ .nav-list {
+    max-height: 500px; /* Un valor lo suficientemente grande para cubrir la altura del contenido */
+    padding-top: 16px;
+    padding-bottom: 16px;
+    opacity: 1;
+    transition: max-height 500ms ease, 
+                padding-top 500ms ease-in-out,
+                padding-bottom 500ms ease-in-out,
+                opacity 300ms ease;
+}
+
+.sidebar-toggle:checked ~ .sidebar-item {
+    display: flex;
+}
+
+.sidebar .sidebar-item {
+    padding: 8px;
+    text-decoration: none;
+    color: var(--color-paper);
+    background-color: transparent;
+    border-left: 3px solid transparent;
+    border-top: 1px solid var(--color-navy-ink-hover);
+    border-bottom: 1px solid var(--color-navy-ink-hover);
+    min-width: 192px;
+    
+    border-radius: var(--radius-1);
+    transition: background-color;
+    transition-duration: 96ms;
+}
+
+.sidebar .sidebar-item:hover {
+    background-color: var(--color-navy-ink-hover);
+    transition: background-color;
+    transition-duration: 96ms;
+}
+
+.sidebar .sidebar-item.active {
+    background-color: var(--color-navy-soft);
+    border-left: 3px solid var(--color-amber-accent);
+    border-top: 1px solid var(--color-navy-ink-soft);
+    border-bottom: 1px solid var(--color-navy-ink-soft);
+}
